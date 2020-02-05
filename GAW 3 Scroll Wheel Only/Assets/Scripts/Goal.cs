@@ -1,41 +1,69 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class Goal : MonoBehaviour
 {
     // FOR COLOUR CHANGE
     //public SpriteRenderer spriteRenderer;
+    public bool LevelEnded; // Used By level loader
+    public string nextLevel; // Name of next level
 
-    public float maxScale = 4;
-    public float minScale = 1;
+    float maxScale = 5f;
+    float minScale = 1f;
+    float scaleSpeed = 4f;
+
+    float rotateSpeed = -30f;
 
     float counter = 0f;
-    void Start()
-    {
-        
-    }
 
     void Update()
     {
+
         counter += Time.deltaTime;
 
-        gameObject.transform.Rotate(Vector3.right);
+        // ---------- ROTATE GOAL
+        transform.Rotate(0, 0, rotateSpeed * Time.deltaTime);
 
-        if (counter < 1)
+        // SCALE GOAL
+        if (counter < 1) // Increase size
         {
             Vector3 currentScale = gameObject.transform.localScale;
-            float scale = Mathf.Max(minScale, currentScale.x * 0.9f);
+            float scale = Mathf.Max(minScale, currentScale.x + scaleSpeed * Time.deltaTime);
             gameObject.transform.localScale = Vector3.one * scale;
 
         }
-        else if (counter > 1 && counter < 2)
+        else if (counter < 2) // Decrease size
         {
             Vector3 currentScale = gameObject.transform.localScale;
-            float scale = Mathf.Min(maxScale, currentScale.x * 1.1f);
+            float scale = Mathf.Min(maxScale, currentScale.x - scaleSpeed * Time.deltaTime);
             gameObject.transform.localScale = Vector3.one * scale;
         }
         else
             counter = 0;
+
+        // ---------- colour changer method(){}
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            // ---------- DESTROY PLAYER
+            Destroy(collision.gameObject);
+            LevelEnded = true;
+            // ---------- play sound
+            // ---------- play particles
+            // ---------- shake screen
+            // ---------- collaprse goal 
+            // ---------- add delay
+
+            // ---------- CHANGE LEVEL
+            LevelEnded = true;
+
+        }
+
     }
 }
