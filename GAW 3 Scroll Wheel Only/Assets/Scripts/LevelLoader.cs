@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SceneManagement;
+
 
 public class LevelLoader : MonoBehaviour
 {
@@ -12,7 +14,11 @@ public class LevelLoader : MonoBehaviour
     public float TransitionTime = 1f;
     void Update()
     {
-        
+        if (Input.GetKey("escape"))
+        {
+            Application.Quit();
+        }
+
         if (Goal.LevelEnded)
         {
             LoadNextLevel();

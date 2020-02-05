@@ -8,6 +8,9 @@ public class PlatformMover : MonoBehaviour
     public float moveSpeed;
 
     float startX, startY;
+
+    bool atX = false;
+    bool atY = false;
     void Start()
     {
         startX = transform.position.x;
@@ -22,13 +25,15 @@ public class PlatformMover : MonoBehaviour
     private void move()
     {
         //transform.Translate(Vector2.MoveTowards(transform.position.x, transform.position.x + MaxX, moveSpeed);
-        if (transform.position.x < startX + RangeX)
+        if (transform.position.x < startX + RangeX && atX == false)
         {
             transform.Translate(moveSpeed * Time.deltaTime, 0, 0);
+            atX = true;
         }
-        else if (transform.position.x > startX - RangeX) // gets into this loop then falls back into previous
+        if (transform.position.x > startX - RangeX && atX) // gets into this loop then falls back into previous
         {
             transform.Translate(-moveSpeed * Time.deltaTime, 0, 0);
+            atX = false;
         }
         
 

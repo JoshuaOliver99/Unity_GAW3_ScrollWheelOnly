@@ -53,7 +53,7 @@ public class Goal : MonoBehaviour
         {
             // ---------- DESTROY PLAYER
             Destroy(collision.gameObject);
-            LevelEnded = true;
+
             // ---------- play sound
             // ---------- play particles
             // ---------- shake screen
